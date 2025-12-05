@@ -1,0 +1,30 @@
+import React, { useEffect, useState } from "react";
+
+function App() {
+  const [quotes, setQuotes] = useState([]);
+
+  useEffect(() => {
+  
+    fetch("https://dummyjson.com/quotes")
+      .then((response) => response.json())
+      .then((data) => {
+      
+        setQuotes(data.quotes.slice(0, 10));
+      })
+      .catch((error) => console.error("Error fetching quotes:", error));
+  }, []);
+  return (
+    <div className="list">
+      <h1 style={{ color: "green" }}>Quotes List</h1>
+      {quotes.length > 0 ? (
+        quotes.map((quote) => (
+          <h1 key={quote.id} style={{ fontSize: "20px", color: "#333" }}>
+            "{quote.quote}"
+          </h1>
+        ))
+      ) :<h1 />}
+    </div>
+  );
+}
+
+export default App;
